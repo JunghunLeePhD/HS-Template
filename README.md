@@ -2,18 +2,18 @@
 
 A production-ready **template** for building lightweight, high-performance web applications with **Haskell** and **Scotty**.
 
-Use this repository as a starting point for your new Haskell projects. It features a **Split-Repository Architecture** to ensure instant development environments:
+This project uses a **Split-Repository Architecture**:
 
-- **Base Environment:** Uses a pre-built public Docker image (`hs-template-env`) for heavy tools.
-- **App Code:** Keeps this repository light and fast.
+- **Base Environment:** Uses a pre-built public Docker image (`haskell-dev-base`) for heavy tools.
+- **App Code:** This repository contains only the source code.
+- **CI/CD:** GitHub Actions automatically builds and publishes the production image to GHCR.
 
 ## 🚀 Features
 
 - **Backend:** Haskell (GHC 9.4) + Scotty Framework.
-- **Architecture:** configured for JSON APIs & HTML rendering.
+- **Frontend:** Serves static HTML/CSS/JS with Prettier formatting.
 - **Dev Environment:** VS Code Devcontainer (Instant startup).
-- **Tooling:** Pre-configured with `just`, `ormolu` (formatter), and `zsh`.
-- **Deployment:** Production-ready Multi-stage Dockerfile.
+- **Deployment:** Pulls pre-built Docker images from GitHub Container Registry.
 
 ---
 
@@ -21,100 +21,86 @@ Use this repository as a starting point for your new Haskell projects. It featur
 
 ### 1. Create Your Repository
 
-Click the **"Use this template"** button at the top of this GitHub page to create a new repository with this starter code.
+Click the **"Use this template"** button at the top of this GitHub page.
 
 ### 2. Rename the Project
 
-Once you have cloned your new repository, you need to update the project name in a few files.
-Search for `my-haskell-webapp` and `YOUR_GITHUB_USERNAME` in the following files and replace them with your own details:
+Search for `my-haskell-webapp` and `YOUR_GITHUB_USERNAME` in the following files and replace them with your actual details:
 
-1.  `package.yaml`: Change `name:` and `github:`.
-2.  `.devcontainer/devcontainer.json`: Update the `image` URL to point to your base image (if you are maintaining your own base).
-3.  `docker-compose.yml`: Update container names.
-4.  `justfile`: Update the executable name in the `watch` command.
+1.  `package.yaml` (Project name)
+2.  `docker-compose.yml` (Prod Image URL)
 
 ---
 
-## 🛠️ For Developers
+## 💻 How to Run Locally
 
-### Prerequisites
+### A. Development Mode (For Coding)
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [VS Code](https://code.visualstudio.com/)
-- [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+_Requires [VS Code](https://code.visualstudio.com/) and [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)._
 
-### Getting Started
-
-1.  **Clone your new repository:**
-
+1.  Open the folder in VS Code.
+2.  Click **"Reopen in Container"** when prompted.
+3.  Run the server:
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/YOUR-NEW-PROJECT.git](https://github.com/YOUR_USERNAME/YOUR-NEW-PROJECT.git)
-    cd YOUR-NEW-PROJECT
+    just run
     ```
+    - Access at [http://localhost:3000](http://localhost:3000).
 
-2.  **Open in VS Code:**
+### B. Production Mode (Fastest)
 
-    ```bash
-    code .
-    ```
+Since this project uses GitHub Actions, you do not need to build the image locally. You can simply pull the latest pre-built image from GitHub.
 
-3.  **Start the Environment:**
-    - You will see a popup: _"Folder contains a Dev Container configuration..."_
-    - Click **Reopen in Container**.
-    - _VS Code will pull the base image and set up your workspace automatically._
+**1. Update `docker-compose.yml`**
+Ensure the `image:` field points to your GitHub repository (e.g., `ghcr.io/username/repo:latest`).
 
-### Development Commands
-
-We use `just` to manage project tasks. Open the integrated terminal (`Ctrl+~`) and run:
-
-| Command             | Description                                                          |
-| :------------------ | :------------------------------------------------------------------- |
-| `just run`          | **Start Server:** Runs the app at `http://localhost:3000`.           |
-| `just watch`        | **Dev Mode:** Automatically restarts the server when you save files. |
-| `just build`        | **Compile:** Builds the project executable.                          |
-| `just fmt`          | **Format:** Formats all `.hs` files using Ormolu.                    |
-| `just docker-build` | **Test Prod:** Builds the production Docker image locally.           |
-| `just docker-run`   | **Run Prod:** Runs the production image locally.                     |
-
----
-
-## 📦 For Users (Deployment)
-
-You do not need to install Haskell to run this application. You only need Docker.
-
-### Option 1: Docker Compose (Recommended)
-
-Run the application in the background with a single command:
+**2. Run the App**
 
 ```bash
+docker compose pull
+
 docker compose up -d
 ```
 
-- **Access:** Open [http://localhost:3000](http://localhost:3000)
-- **Logs:** `docker compose logs -f`
-- **Stop:** `docker compose down`
+**3. Access the App**
 
-### **Option 2: Manual Run**
+- Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000)
 
-If you prefer standard Docker commands:
+## **🛠️ Commands (`**just**`)**
 
-```bash
-docker build -t my-app .
+Run these inside the Devcontainer:
 
-docker run --rm -p 3000:3000 --name my-app-container my-app
-```
+| Command             | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| `just run`          | Compile and start the web server (Dev mode).           |
+| `just watch`        | Recompiles and restarts on file save.                  |
+| `just fmt`          | Format all `.hs`, `.js`, `.css`, and `.html` files.    |
+| `just docker-build` | **Manual Build:** Build the prod image locally (slow). |
+| `just docker-run`   | **Manual Run:** Run the locally built image.           |
 
 ## **📂 Project Structure**
 
 ```Plaintext
 .
-├── .devcontainer/       # Configures VS Code to use the public base image
-├── app/                 # Source code (Main.hs)
-├── docker-compose.yml   # Simplified startup for end-users
-├── Dockerfile           # Production build (Multi-stage: Builder -> Runner)
-├── justfile             # Task runner configuration
-├── package.yaml         # Project dependencies (Hpack)
-└── stack.yaml           # Stack tool configuration
+├── .devcontainer/           # VS Code Devcontainer configuration
+│   └── devcontainer.json
+├── .github/
+│   └── workflows/
+│       └── deploy.yml       # GitHub Actions CI/CD pipeline
+├── app/
+│   └── Main.hs              # Haskell source code (Entry point)
+├── static/
+│   └── index.html           # Static frontend assets (HTML, CSS, JS)
+├── .dockerignore            # Files to exclude from Docker builds
+├── .gitignore               # Files to ignore in Git
+├── .prettierignore          # Files to exclude from Prettier formatting
+├── .prettierrc              # Prettier formatting rules
+├── Dockerfile               # Production image build definition
+├── docker-compose.yml       # Production startup script (pulls from GHCR)
+├── justfile                 # Task runner commands (just run, just build)
+├── my-haskell-webapp.cabal  # Auto-generated Cabal file (do not edit manually)
+├── package.yaml             # Project dependencies & metadata (Edit this one)
+├── stack.yaml               # Stack tool configuration
+└── stack.yaml.lock          # Locked dependency versions
 ```
 
 ## **📝 License**
