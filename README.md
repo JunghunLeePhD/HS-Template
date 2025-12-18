@@ -96,10 +96,8 @@ Run these inside the Devcontainer:
 ├── Dockerfile               # Production image build definition
 ├── docker-compose.yml       # Production startup script (pulls from GHCR)
 ├── justfile                 # Task runner commands (just run, just build)
-├── my-haskell-webapp.cabal  # Auto-generated Cabal file (do not edit manually)
 ├── package.yaml             # Project dependencies & metadata (Edit this one)
-├── stack.yaml               # Stack tool configuration
-└── stack.yaml.lock          # Locked dependency versions
+└── stack.yaml               # Stack tool configuration
 ```
 
 ## **📝 License**
