@@ -68,9 +68,10 @@ Ensure you have [Docker Installed](https://www.docker.com/products/docker-deskto
 Run this single command in your terminal:
 
 ```bash
-docker run -d -p 3000:3000 --name my-app ghcr.io/YOUR_GITHUB_USERNAME/my-haskell-webapp:latest
-Open http://localhost:3000 in your browser.
+docker run -d --platform linux/amd64 -p 3000:3000 --name my-app ghcr.io/YOUR_GITHUB_USERNAME/my-haskell-webapp:latest
 ```
+
+Access at [http://localhost:3000](http://localhost:3000).
 
 **3. Access the App**
 
