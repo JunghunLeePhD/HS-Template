@@ -1,0 +1,6 @@
+.stack-work/
+.git/
+.devcontainer/
+.vscode/
+dist/
+dist-newstyle/

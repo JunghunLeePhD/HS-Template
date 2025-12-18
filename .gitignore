@@ -1,0 +1,11 @@
+.stack-work/
+dist/
+dist-newstyle/
+*.o
+*.hi
+*.chi
+.vscode/
+.env
+
+# Ignore the generated cabal file
+*.cabal

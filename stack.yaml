@@ -1,0 +1,8 @@
+resolver: lts-21.25
+
+# Add these lines to use the GHC 9.4.8 inside your Docker image
+system-ghc: true
+install-ghc: false
+
+packages:
+  - .
