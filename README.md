@@ -57,8 +57,19 @@ Ensure the `image:` field points to your GitHub repository (e.g., `ghcr.io/usern
 
 ```bash
 docker compose pull
-
 docker compose up -d
+```
+
+## 📦 Quick Run (No Code Download Required)
+
+If you just want to use the app, you don't need to download the source code.
+Ensure you have [Docker Installed](https://www.docker.com/products/docker-desktop/).
+
+Run this single command in your terminal:
+
+```bash
+docker run -d -p 3000:3000 --name my-app ghcr.io/YOUR_GITHUB_USERNAME/my-haskell-webapp:latest
+Open http://localhost:3000 in your browser.
 ```
 
 **3. Access the App**
