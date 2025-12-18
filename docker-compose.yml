@@ -2,7 +2,6 @@ version: '3.8'
 services:
   app:
     image: ghcr.io/junghunleephd/hs-template:latest
-    platform: linux/amd64
     ports:
       - '3000:3000'
     restart: always

@@ -60,17 +60,6 @@ docker compose pull
 docker compose up -d
 ```
 
-## 📦 Quick Run (No Code Download Required)
-
-If you just want to use the app, you don't need to download the source code.
-Ensure you have [Docker Installed](https://www.docker.com/products/docker-desktop/).
-
-Run this single command in your terminal:
-
-```bash
-docker run -d --platform linux/amd64 -p 3000:3000 --name my-app ghcr.io/YOUR_GITHUB_USERNAME/my-haskell-webapp:latest
-```
-
 Access at [http://localhost:3000](http://localhost:3000).
 
 **3. Access the App**
