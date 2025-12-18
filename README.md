@@ -60,8 +60,6 @@ docker compose pull
 docker compose up -d
 ```
 
-Access at [http://localhost:3000](http://localhost:3000).
-
 **3. Access the App**
 
 - Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000)
