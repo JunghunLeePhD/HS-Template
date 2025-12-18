@@ -38,7 +38,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the binary
-COPY --from=builder /root/.local/bin/my-haskell-webapp-exe /opt/app/server
+COPY --from=builder /home/vscode/.local/bin/my-haskell-webapp-exe /opt/app/server
 
 # --- NEW: Copy the static folder ---
 COPY static /opt/app/static
