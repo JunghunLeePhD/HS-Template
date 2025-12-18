@@ -4,6 +4,9 @@ default:
 run:
     stack run
 
+run-opt:
+    stack run --ghc-options='-O2'
+
 build:
     stack build
 

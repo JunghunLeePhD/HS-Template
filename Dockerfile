@@ -14,8 +14,7 @@ RUN stack build --system-ghc --only-dependencies
 
 # Copy source and build app
 COPY app app
-RUN stack install --system-ghc
-
+RUN stack install --system-ghc --ghc-options='-O2'
 # ------------------------------------------------------------------------------
 # STAGE 2: Runner
 # Tiny image for distribution
